@@ -71,6 +71,10 @@ public class MaterialSpinner extends TextView {
   private int arrowColorDisabled;
   private int textColor;
   private float textSize;
+  private int textPaddingTop;
+  private int textPaddingRight;
+  private int textPaddingBottom;
+  private int textPaddingLeft;
   private int numberOfItems;
 
   public MaterialSpinner(Context context) {
@@ -93,6 +97,8 @@ public class MaterialSpinner extends TextView {
     int defaultColor = getTextColors().getDefaultColor();
     boolean rtl = Utils.isRtl(context);
 
+    Resources resources = getResources();
+
     try {
       background = ta.getDrawable(R.styleable.MaterialSpinner_ms_background);
       backgroundColor = ta.getColor(R.styleable.MaterialSpinner_ms_background_color, Color.WHITE);
@@ -101,6 +107,18 @@ public class MaterialSpinner extends TextView {
       hideArrow = ta.getBoolean(R.styleable.MaterialSpinner_ms_hide_arrow, false);
       popupWindowMaxHeight = ta.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_dropdown_max_height, 0);
       textSize = ta.getDimension(R.styleable.MaterialSpinner_ms_text_size, 0);
+      textPaddingTop = ta.getDimensionPixelOffset(
+                        R.styleable.MaterialSpinner_ms_text_padding_top,
+                        resources.getDimensionPixelSize(R.dimen.ms__padding_top));
+      textPaddingRight = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_text_padding_right,
+              resources.getDimensionPixelSize(R.dimen.ms__padding_left));
+      textPaddingBottom = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_text_padding_bottom,
+              resources.getDimensionPixelSize(R.dimen.ms__padding_top));
+      textPaddingLeft = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_text_padding_left,
+              resources.getDimensionPixelSize(R.dimen.ms__padding_left));
       popupWindowHeight = ta.getLayoutDimension(R.styleable.MaterialSpinner_ms_dropdown_height,
           WindowManager.LayoutParams.WRAP_CONTENT);
       arrowColorDisabled = Utils.lighter(arrowColor, 0.8f);
@@ -108,20 +126,9 @@ public class MaterialSpinner extends TextView {
       ta.recycle();
     }
 
-    Resources resources = getResources();
-    int left, right, bottom, top;
-    left = right = resources.getDimensionPixelSize(R.dimen.ms__padding_top);
-    bottom = top = 0;
-
-    if (rtl) {
-      right = resources.getDimensionPixelSize(R.dimen.ms__padding_left);
-    } else {
-      left = resources.getDimensionPixelSize(R.dimen.ms__padding_left);
-    }
-
     setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
     setClickable(true);
-    setPadding(left, top, right, bottom);
+    setPadding(textPaddingLeft, textPaddingTop, textPaddingRight, textPaddingBottom);
 
     if(background != null)
         setBackgroundDrawable(background);
