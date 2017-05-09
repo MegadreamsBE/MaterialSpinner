@@ -34,6 +34,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,6 +60,7 @@ public class MaterialSpinner extends TextView {
   private PopupWindow popupWindow;
   private ListView listView;
   private Drawable arrowDrawable;
+  private Drawable background;
   private boolean hideArrow;
   private boolean nothingSelected;
   private int popupWindowMaxHeight;
@@ -68,6 +70,7 @@ public class MaterialSpinner extends TextView {
   private int arrowColor;
   private int arrowColorDisabled;
   private int textColor;
+  private float textSize;
   private int numberOfItems;
 
   public MaterialSpinner(Context context) {
@@ -91,11 +94,13 @@ public class MaterialSpinner extends TextView {
     boolean rtl = Utils.isRtl(context);
 
     try {
+      background = ta.getDrawable(R.styleable.MaterialSpinner_ms_background);
       backgroundColor = ta.getColor(R.styleable.MaterialSpinner_ms_background_color, Color.WHITE);
       textColor = ta.getColor(R.styleable.MaterialSpinner_ms_text_color, defaultColor);
       arrowColor = ta.getColor(R.styleable.MaterialSpinner_ms_arrow_tint, textColor);
       hideArrow = ta.getBoolean(R.styleable.MaterialSpinner_ms_hide_arrow, false);
       popupWindowMaxHeight = ta.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_dropdown_max_height, 0);
+      textSize = ta.getDimension(R.styleable.MaterialSpinner_ms_text_size, 0);
       popupWindowHeight = ta.getLayoutDimension(R.styleable.MaterialSpinner_ms_dropdown_height,
           WindowManager.LayoutParams.WRAP_CONTENT);
       arrowColorDisabled = Utils.lighter(arrowColor, 0.8f);
@@ -115,7 +120,12 @@ public class MaterialSpinner extends TextView {
     setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
     setClickable(true);
     setPadding(left, top, right, bottom);
-    setBackgroundResource(R.drawable.ms__selector);
+
+    if(background != null)
+        setBackgroundDrawable(background);
+    else
+      setBackgroundResource(R.drawable.ms__selector);
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && rtl) {
       setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
       setTextDirection(View.TEXT_DIRECTION_RTL);
@@ -171,6 +181,14 @@ public class MaterialSpinner extends TextView {
     }
     if (textColor != defaultColor) {
       setTextColor(textColor);
+    }
+    if(textSize > 0) {
+      setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+    } else {
+      int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14,
+              context.getResources().getDisplayMetrics());
+
+      setTextSize(TypedValue.COMPLEX_UNIT_PX, px);
     }
 
     popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {

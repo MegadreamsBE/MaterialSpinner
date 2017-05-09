@@ -47,8 +47,10 @@ You can add attributes to customize the view. Available attributes:
 |------------------------|-----------|--------------------------------------------------------|
 | ms_arrow_tint          | color     | sets the color on the drop-down arrow                  |
 | ms_hide_arrow          | boolean   | set to true to hide the arrow drawable                 |
+| ms_background          | drawable  | set the background                                     |
 | ms_background_color    | color     | set the background color for the spinner and drop-down |
 | ms_text_color          | color     | set the text color                                     |
+| ms_text_size           | dimension | set the text size                                      |
 | ms_dropdown_max_height | dimension | set the max height of the drop-down                    |
 | ms_dropdown_height     | dimension | set the height of the drop-down                        |
 
