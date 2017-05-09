@@ -110,7 +110,9 @@ public class MaterialSpinner extends TextView {
 
     Resources resources = getResources();
     int left, right, bottom, top;
-    left = right = bottom = top = resources.getDimensionPixelSize(R.dimen.ms__padding_top);
+    left = right = resources.getDimensionPixelSize(R.dimen.ms__padding_top);
+    bottom = top = 0;
+
     if (rtl) {
       right = resources.getDimensionPixelSize(R.dimen.ms__padding_left);
     } else {
@@ -179,9 +181,11 @@ public class MaterialSpinner extends TextView {
     if (backgroundColor != Color.WHITE) { // default color is white
       setBackgroundColor(backgroundColor);
     }
+
     if (textColor != defaultColor) {
       setTextColor(textColor);
     }
+
     if(textSize > 0) {
       setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
     } else {
