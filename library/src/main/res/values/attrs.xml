@@ -20,8 +20,9 @@
   <declare-styleable name="MaterialSpinner" tools:ignore="ResourceName">
     <attr name="ms_arrow_tint" format="color"/>
     <attr name="ms_hide_arrow" format="boolean"/>
+    <!-- {@deprecated Use ms_background and ms_dropdown_background instead.} -->
     <attr name="ms_background_color" format="color"/>
-    <attr name="ms_background" format="reference"/>
+    <attr name="ms_background" format="reference|color"/>
     <attr name="ms_text_color" format="color"/>
     <attr name="ms_text_size" format="dimension"/>
     <attr name="ms_padding_left" format="dimension"/>
@@ -32,7 +33,7 @@
     <attr name="ms_item_padding_top" format="dimension"/>
     <attr name="ms_item_padding_right" format="dimension"/>
     <attr name="ms_item_padding_bottom" format="dimension"/>
-    <attr name="ms_dropdown_background" format="reference"/>
+    <attr name="ms_dropdown_background" format="reference|color"/>
     <attr name="ms_dropdown_elevation" format="dimension"/>
     <attr name="ms_dropdown_max_height" format="dimension"/>
     <attr name="ms_dropdown_height" format="dimension">
