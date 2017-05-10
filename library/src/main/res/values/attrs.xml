@@ -24,10 +24,16 @@
     <attr name="ms_background" format="reference"/>
     <attr name="ms_text_color" format="color"/>
     <attr name="ms_text_size" format="dimension"/>
-    <attr name="ms_text_padding_top" format="dimension"/>
-    <attr name="ms_text_padding_right" format="dimension"/>
-    <attr name="ms_text_padding_bottom" format="dimension"/>
-    <attr name="ms_text_padding_left" format="dimension"/>
+    <attr name="ms_padding_left" format="dimension"/>
+    <attr name="ms_padding_top" format="dimension"/>
+    <attr name="ms_padding_right" format="dimension"/>
+    <attr name="ms_padding_bottom" format="dimension"/>
+    <attr name="ms_item_padding_left" format="dimension"/>
+    <attr name="ms_item_padding_top" format="dimension"/>
+    <attr name="ms_item_padding_right" format="dimension"/>
+    <attr name="ms_item_padding_bottom" format="dimension"/>
+    <attr name="ms_dropdown_background" format="reference"/>
+    <attr name="ms_dropdown_elevation" format="dimension"/>
     <attr name="ms_dropdown_max_height" format="dimension"/>
     <attr name="ms_dropdown_height" format="dimension">
       <enum name="fill_parent" value="-1"/>

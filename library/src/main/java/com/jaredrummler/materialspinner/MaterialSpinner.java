@@ -65,16 +65,22 @@ public class MaterialSpinner extends TextView {
   private boolean nothingSelected;
   private int popupWindowMaxHeight;
   private int popupWindowHeight;
+  private Drawable popupBackground;
+  private int popupElevation;
   private int selectedIndex;
   private int backgroundColor;
   private int arrowColor;
   private int arrowColorDisabled;
   private int textColor;
   private float textSize;
-  private int textPaddingTop;
-  private int textPaddingRight;
-  private int textPaddingBottom;
-  private int textPaddingLeft;
+  private int paddingLeft;
+  private int paddingTop;
+  private int paddingRight;
+  private int paddingBottom;
+  private int itemPaddingLeft;
+  private int itemPaddingTop;
+  private int itemPaddingRight;
+  private int itemPaddingBottom;
   private int numberOfItems;
 
   public MaterialSpinner(Context context) {
@@ -107,20 +113,35 @@ public class MaterialSpinner extends TextView {
       hideArrow = ta.getBoolean(R.styleable.MaterialSpinner_ms_hide_arrow, false);
       popupWindowMaxHeight = ta.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_dropdown_max_height, 0);
       textSize = ta.getDimension(R.styleable.MaterialSpinner_ms_text_size, 0);
-      textPaddingTop = ta.getDimensionPixelOffset(
-                        R.styleable.MaterialSpinner_ms_text_padding_top,
-                        resources.getDimensionPixelSize(R.dimen.ms__padding_top));
-      textPaddingRight = ta.getDimensionPixelOffset(
-              R.styleable.MaterialSpinner_ms_text_padding_right,
+      paddingLeft = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_padding_left,
               resources.getDimensionPixelSize(R.dimen.ms__padding_left));
-      textPaddingBottom = ta.getDimensionPixelOffset(
-              R.styleable.MaterialSpinner_ms_text_padding_bottom,
+      paddingTop = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_padding_top,
               resources.getDimensionPixelSize(R.dimen.ms__padding_top));
-      textPaddingLeft = ta.getDimensionPixelOffset(
-              R.styleable.MaterialSpinner_ms_text_padding_left,
+      paddingRight = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_padding_right,
               resources.getDimensionPixelSize(R.dimen.ms__padding_left));
+      paddingBottom = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_padding_bottom,
+              resources.getDimensionPixelSize(R.dimen.ms__padding_top));
+      itemPaddingLeft = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_item_padding_left,
+              resources.getDimensionPixelSize(R.dimen.ms__popup_padding_left));
+      itemPaddingTop = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_item_padding_top,
+              resources.getDimensionPixelSize(R.dimen.ms__popup_padding_top));
+      itemPaddingRight = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_item_padding_right,
+              resources.getDimensionPixelSize(R.dimen.ms__popup_padding_left));
+      itemPaddingBottom = ta.getDimensionPixelOffset(
+              R.styleable.MaterialSpinner_ms_item_padding_bottom,
+              resources.getDimensionPixelSize(R.dimen.ms__popup_padding_top));
       popupWindowHeight = ta.getLayoutDimension(R.styleable.MaterialSpinner_ms_dropdown_height,
           WindowManager.LayoutParams.WRAP_CONTENT);
+      popupBackground = ta.getDrawable(R.styleable.MaterialSpinner_ms_dropdown_background);
+      popupElevation = ta.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_dropdown_elevation,
+                          resources.getDimensionPixelSize(R.dimen.ms__popup_elevation));
       arrowColorDisabled = Utils.lighter(arrowColor, 0.8f);
     } finally {
       ta.recycle();
@@ -128,7 +149,7 @@ public class MaterialSpinner extends TextView {
 
     setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
     setClickable(true);
-    setPadding(textPaddingLeft, textPaddingTop, textPaddingRight, textPaddingBottom);
+    setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
     if(background != null)
         setBackgroundDrawable(background);
@@ -178,11 +199,18 @@ public class MaterialSpinner extends TextView {
     popupWindow.setOutsideTouchable(true);
     popupWindow.setFocusable(true);
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      popupWindow.setElevation(16);
-      popupWindow.setBackgroundDrawable(Utils.getDrawable(context, R.drawable.ms__drawable));
+    if(popupBackground != null) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        popupWindow.setElevation(popupElevation);
+      }
+      popupWindow.setBackgroundDrawable(popupBackground);
     } else {
-      popupWindow.setBackgroundDrawable(Utils.getDrawable(context, R.drawable.ms__drop_down_shadow));
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        popupWindow.setElevation(popupElevation);
+        popupWindow.setBackgroundDrawable(Utils.getDrawable(context, R.drawable.ms__drawable));
+      } else {
+        popupWindow.setBackgroundDrawable(Utils.getDrawable(context, R.drawable.ms__drop_down_shadow));
+      }
     }
 
     if (backgroundColor != Color.WHITE) { // default color is white
@@ -360,6 +388,7 @@ public class MaterialSpinner extends TextView {
   public <T> void setItems(@NonNull List<T> items) {
     numberOfItems = items.size();
     adapter = new MaterialSpinnerAdapter<>(getContext(), items).setTextColor(textColor);
+    adapter.setPadding(itemPaddingLeft, itemPaddingTop, itemPaddingRight, itemPaddingBottom);
     setAdapterInternal(adapter);
   }
 

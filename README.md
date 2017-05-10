@@ -51,8 +51,18 @@ You can add attributes to customize the view. Available attributes:
 | ms_background_color    | color     | set the background color for the spinner and drop-down |
 | ms_text_color          | color     | set the text color                                     |
 | ms_text_size           | dimension | set the text size                                      |
+| ms_padding_left        | dimension | set the left padding for the spinner itself            |
+| ms_padding_top         | dimension | set the top padding for the spinner itself             |
+| ms_padding_right       | dimension | set the right padding for the spinner itself           |
+| ms_padding_bottom      | dimension | set the bottom padding for the spinner itself          |
+| ms_item_padding_left   | dimension | set the left padding for the spinner items             |
+| ms_item_padding_top    | dimension | set the top padding for the spinner items              |
+| ms_item_padding_right  | dimension | set the right padding for the spinner items            |
+| ms_item_padding_bottom | dimension | set the bottom padding for the spinner items           |
 | ms_dropdown_max_height | dimension | set the max height of the drop-down                    |
 | ms_dropdown_height     | dimension | set the height of the drop-down                        |
+| ms_dropdown_background | drawable  | set the background for the spinner items               |
+| ms_dropdown_elevation  | dimension | set the elevation for the box containing the items     |
 
 Download
 --------
